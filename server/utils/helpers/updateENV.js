@@ -1,284 +1,297 @@
 const KEY_MAPPING = {
   LLMProvider: {
     envKey: "LLM_PROVIDER",
-    checks: [isNotEmpty, supportedLLM],
+    checks: [isSafe, isNotEmpty, supportedLLM],
     postUpdate: [wipeWorkspaceModelPreference],
   },
   // OpenAI Settings
   OpenAiKey: {
     envKey: "OPEN_AI_KEY",
-    checks: [isNotEmpty, validOpenAIKey],
+    checks: [isSafe, isNotEmpty, validOpenAIKey],
   },
   OpenAiModelPref: {
     envKey: "OPEN_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   // Azure OpenAI Settings
   AzureOpenAiEndpoint: {
     envKey: "AZURE_OPENAI_ENDPOINT",
-    checks: [isNotEmpty, validAzureURL],
+    checks: [isSafe, isNotEmpty, validAzureURL],
   },
   AzureOpenAiTokenLimit: {
     envKey: "AZURE_OPENAI_TOKEN_LIMIT",
-    checks: [validOpenAiTokenLimit],
+    checks: [isSafe, validOpenAiTokenLimit],
   },
   AzureOpenAiKey: {
     envKey: "AZURE_OPENAI_KEY",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   AzureOpenAiModelPref: {
     envKey: "OPEN_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   AzureOpenAiEmbeddingModelPref: {
     envKey: "EMBEDDING_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // Anthropic Settings
   AnthropicApiKey: {
     envKey: "ANTHROPIC_API_KEY",
-    checks: [isNotEmpty, validAnthropicApiKey],
+    checks: [isSafe, isNotEmpty, validAnthropicApiKey],
   },
   AnthropicModelPref: {
     envKey: "ANTHROPIC_MODEL_PREF",
-    checks: [isNotEmpty, validAnthropicModel],
+    checks: [isSafe, isNotEmpty, validAnthropicModel],
   },
 
   GeminiLLMApiKey: {
     envKey: "GEMINI_API_KEY",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   GeminiLLMModelPref: {
     envKey: "GEMINI_LLM_MODEL_PREF",
-    checks: [isNotEmpty, validGeminiModel],
+    checks: [isSafe, isNotEmpty, validGeminiModel],
   },
 
   // LMStudio Settings
   LMStudioBasePath: {
     envKey: "LMSTUDIO_BASE_PATH",
-    checks: [isNotEmpty, validLLMExternalBasePath, validDockerizedUrl],
+    checks: [isSafe, isNotEmpty, validLLMExternalBasePath, validDockerizedUrl],
   },
   LMStudioTokenLimit: {
     envKey: "LMSTUDIO_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
+    checks: [isSafe, nonZero],
   },
 
   // LocalAI Settings
   LocalAiBasePath: {
     envKey: "LOCAL_AI_BASE_PATH",
-    checks: [isNotEmpty, validLLMExternalBasePath, validDockerizedUrl],
+    checks: [isSafe, isNotEmpty, validLLMExternalBasePath, validDockerizedUrl],
   },
   LocalAiModelPref: {
     envKey: "LOCAL_AI_MODEL_PREF",
-    checks: [],
+    checks: [isSafe],
   },
   LocalAiTokenLimit: {
     envKey: "LOCAL_AI_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
+    checks: [isSafe, nonZero],
   },
   LocalAiApiKey: {
     envKey: "LOCAL_AI_API_KEY",
-    checks: [],
+    checks: [isSafe],
   },
 
   OllamaLLMBasePath: {
     envKey: "OLLAMA_BASE_PATH",
-    checks: [isNotEmpty, validOllamaLLMBasePath, validDockerizedUrl],
+    checks: [isSafe, isNotEmpty, validOllamaLLMBasePath, validDockerizedUrl],
   },
   OllamaLLMModelPref: {
     envKey: "OLLAMA_MODEL_PREF",
-    checks: [],
+    checks: [isSafe],
   },
   OllamaLLMTokenLimit: {
     envKey: "OLLAMA_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
+    checks: [isSafe, nonZero],
   },
 
   // Mistral AI API Settings
   MistralApiKey: {
     envKey: "MISTRAL_API_KEY",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   MistralModelPref: {
     envKey: "MISTRAL_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // Native LLM Settings
   NativeLLMModelPref: {
     envKey: "NATIVE_LLM_MODEL_PREF",
-    checks: [isDownloadedModel],
+    checks: [isSafe, isDownloadedModel],
   },
   NativeLLMTokenLimit: {
     envKey: "NATIVE_LLM_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
+    checks: [isSafe, nonZero],
   },
 
   // Hugging Face LLM Inference Settings
   HuggingFaceLLMEndpoint: {
     envKey: "HUGGING_FACE_LLM_ENDPOINT",
-    checks: [isNotEmpty, isValidURL, validHuggingFaceEndpoint],
+    checks: [isSafe, isNotEmpty, isValidURL, validHuggingFaceEndpoint],
   },
   HuggingFaceLLMAccessToken: {
     envKey: "HUGGING_FACE_LLM_API_KEY",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   HuggingFaceLLMTokenLimit: {
     envKey: "HUGGING_FACE_LLM_TOKEN_LIMIT",
-    checks: [nonZero],
+    checks: [isSafe, nonZero],
   },
 
   EmbeddingEngine: {
     envKey: "EMBEDDING_ENGINE",
-    checks: [supportedEmbeddingModel],
+    checks: [isSafe, supportedEmbeddingModel],
   },
   EmbeddingBasePath: {
     envKey: "EMBEDDING_BASE_PATH",
-    checks: [isNotEmpty, validDockerizedUrl],
+    checks: [isSafe, isNotEmpty, validDockerizedUrl],
   },
   EmbeddingModelPref: {
     envKey: "EMBEDDING_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   EmbeddingModelMaxChunkLength: {
     envKey: "EMBEDDING_MODEL_MAX_CHUNK_LENGTH",
-    checks: [nonZero],
+    checks: [isSafe, nonZero],
   },
 
   // Vector Database Selection Settings
   VectorDB: {
     envKey: "VECTOR_DB",
-    checks: [isNotEmpty, supportedVectorDB],
+    checks: [isSafe, isNotEmpty, supportedVectorDB],
   },
 
   // Chroma Options
   ChromaEndpoint: {
     envKey: "CHROMA_ENDPOINT",
-    checks: [isValidURL, validChromaURL, validDockerizedUrl],
+    checks: [isSafe, isValidURL, validChromaURL, validDockerizedUrl],
   },
   ChromaApiHeader: {
     envKey: "CHROMA_API_HEADER",
-    checks: [],
+    checks: [isSafe],
   },
   ChromaApiKey: {
     envKey: "CHROMA_API_KEY",
-    checks: [],
+    checks: [isSafe],
   },
 
   // Weaviate Options
   WeaviateEndpoint: {
     envKey: "WEAVIATE_ENDPOINT",
-    checks: [isValidURL, validDockerizedUrl],
+    checks: [isSafe, isValidURL, validDockerizedUrl],
   },
   WeaviateApiKey: {
     envKey: "WEAVIATE_API_KEY",
-    checks: [],
+    checks: [isSafe],
   },
 
   // QDrant Options
   QdrantEndpoint: {
     envKey: "QDRANT_ENDPOINT",
-    checks: [isValidURL, validDockerizedUrl],
+    checks: [isSafe, isValidURL, validDockerizedUrl],
   },
   QdrantApiKey: {
     envKey: "QDRANT_API_KEY",
-    checks: [],
+    checks: [isSafe],
   },
   PineConeKey: {
     envKey: "PINECONE_API_KEY",
-    checks: [],
+    checks: [isSafe],
   },
   PineConeIndex: {
     envKey: "PINECONE_INDEX",
-    checks: [],
+    checks: [isSafe],
   },
 
   // Milvus Options
   MilvusAddress: {
     envKey: "MILVUS_ADDRESS",
-    checks: [isValidURL, validDockerizedUrl],
+    checks: [isSafe, isValidURL, validDockerizedUrl],
   },
   MilvusUsername: {
     envKey: "MILVUS_USERNAME",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   MilvusPassword: {
     envKey: "MILVUS_PASSWORD",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // Zilliz Cloud Options
   ZillizEndpoint: {
     envKey: "ZILLIZ_ENDPOINT",
-    checks: [isValidURL],
+    checks: [isSafe, isValidURL],
   },
   ZillizApiToken: {
     envKey: "ZILLIZ_API_TOKEN",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // Astra DB Options
 
   AstraDBApplicationToken: {
     envKey: "ASTRA_DB_APPLICATION_TOKEN",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   AstraDBEndpoint: {
     envKey: "ASTRA_DB_ENDPOINT",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // Together Ai Options
   TogetherAiApiKey: {
     envKey: "TOGETHER_AI_API_KEY",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   TogetherAiModelPref: {
     envKey: "TOGETHER_AI_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // Perplexity Options
   PerplexityApiKey: {
     envKey: "PERPLEXITY_API_KEY",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   PerplexityModelPref: {
     envKey: "PERPLEXITY_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // OpenRouter Options
   OpenRouterApiKey: {
     envKey: "OPENROUTER_API_KEY",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   OpenRouterModelPref: {
     envKey: "OPENROUTER_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // Groq Options
   GroqApiKey: {
     envKey: "GROQ_API_KEY",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
   GroqModelPref: {
     envKey: "GROQ_MODEL_PREF",
-    checks: [isNotEmpty],
+    checks: [isSafe, isNotEmpty],
   },
 
   // System Settings
   AuthToken: {
     envKey: "AUTH_TOKEN",
-    checks: [requiresForceMode],
+    checks: [isSafe, requiresForceMode],
   },
   JWTSecret: {
     envKey: "JWT_SECRET",
-    checks: [requiresForceMode],
+    checks: [isSafe, requiresForceMode],
   },
 };
+
+// check if user input is safe to be considered as an environment variable
+// generic check for all the values - could be possibly distinguished - letters, numbers, URLs, ...
+function isSafe(input = "") {
+  if (typeof input !== "string")
+    return "Value is not a string";
+  if (!/^[\x00-\x7F]*$/.test(input))
+    return "Value contains non ASCII characters";
+  if (!/^[A-Za-z0-9\-_\.:/?\+=]*$/.test(input))            // letter, numbers, - . : / ? + =
+    return "Value contains blacklisted characters";
+
+  return null;
+}
 
 function isNotEmpty(input = "") {
   return !input || input.length === 0 ? "Value cannot be empty" : null;
@@ -550,7 +563,8 @@ async function dumpENV() {
   var envResult = `# Auto-dump ENV from system call on ${new Date().toTimeString()}\n`;
   envResult += Object.entries(frozenEnvs)
     .map(([key, value]) => {
-      return `${key}='${value}'`;
+      if(isSafe(value) === null)
+        return `${key}='${value}'`;
     })
     .join("\n");
 
