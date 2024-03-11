@@ -109,6 +109,24 @@ function systemEndpoints(app) {
 
       if (await SystemSettings.isMultiUserMode()) {
         const { username, password } = reqBody(request);
+
+        if (typeof username !== "string" || typeof password !== "string") {
+          await EventLogs.logEvent(
+            "failed_login_invalid_data",
+            {
+              ip: request.ip || "Unknown IP",
+              username: username || "Unknown user",
+            }
+          );
+          response.status(200).json({
+            user: null,
+            valid: false,
+            token: null,
+            message: "[005] Invalid data types on user login.",
+          });
+          return;
+        }
+
         const existingUser = await User.get({ username });
 
         if (!existingUser) {
