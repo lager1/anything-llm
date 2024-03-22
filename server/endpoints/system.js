@@ -54,7 +54,9 @@ function systemEndpoints(app) {
     response.status(200).json({ online: true });
   });
 
-  app.get("/migrate", async (_, response) => {
+  app.get("/migrate",
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    async (_, response) => {
     const execSync = require("child_process").execSync;
     execSync("npx prisma migrate deploy --schema=./prisma/schema.prisma", {
       stdio: "inherit",
